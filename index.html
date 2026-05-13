@@ -780,7 +780,7 @@ No markdown, no code blocks, no explanations. Make it visually stunning, use mod
     try {
       // Use the new compression stream method for ultra-short URLs
       const compressed = await compressText(generatedHTML);
-      const base = window.location.hostname === 'hashpage.in' ? '[https://hashpage.in/](https://hashpage.in/)' : window.location.origin + window.location.pathname;
+      const base = window.location.origin + window.location.pathname;
       const url = base + '#z=' + compressed;
 
       history.replaceState(null, '', '#z=' + compressed);
