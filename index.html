@@ -696,9 +696,15 @@
     btn.innerHTML = '<div class="spinner"></div> Creating...';
     setStatus(`Calling ${modelName}...`, 'active');
 
-    const systemPrompt = `You are an expert web developer creating a single-file "Hash Page". The user will describe a website. 
-Respond with ONLY valid HTML — a complete, self-contained HTML5 document including all CSS and JS inline.
-No markdown, no code blocks, no explanations. Make it visually stunning, use modern design patterns, smooth animations, and responsive layout.`;
+    const systemPrompt = `You are an expert web developer. Output ONLY a complete HTML5 document (inline CSS/JS).
+Rules:
+- No markdown, no code fences, no explanations
+- Minimize whitespace: no blank lines, indent with 1 space
+- No comments in code
+- Skip optional HTML boilerplate (e.g. no <meta charset> unless needed)
+- Use shorthand CSS properties
+- Minify JS: short variable names, no unnecessary spaces
+- Still make it visually good with modern design, animations, responsive layout`;
 
     try {
       const response = await fetch(
