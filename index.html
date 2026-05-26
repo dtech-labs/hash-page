@@ -21,7 +21,7 @@
     --accent-hover: #0891b2;
     --green: #10b981;
     --red: #ef4444;
-    --radius: 8px;
+    --radius: 10px;
   }
 
   body {
@@ -31,9 +31,10 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
-  /* Fullscreen Mode for Hash Loading */
+  /* Fullscreen Mode for Loaded Hash Sites */
   body.fullscreen-mode .main-ui { display: none !important; }
   body.fullscreen-mode .fullscreen-container {
     display: block;
@@ -48,20 +49,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 24px;
+    padding: 14px 24px;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
+    height: 60px;
+    z-index: 10;
   }
 
   .logo {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     letter-spacing: -0.5px;
     color: var(--text);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .logo-icon {
@@ -77,16 +79,66 @@
 
   .logo-icon svg { width: 16px; height: 16px; stroke-width: 2.5; }
 
+  .logo-tagline {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    border-left: 1px solid var(--border);
+    padding-left: 10px;
+    margin-left: 2px;
+  }
+
   .header-right { display: flex; align-items: center; gap: 10px; }
-  .header-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .header-link { 
+    font-size: 13px; 
+    color: var(--muted); 
+    text-decoration: none; 
+    transition: color 0.2s; 
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
   .header-link:hover { color: var(--accent); }
 
+  /* Mobile Navigation Toggles */
+  .mobile-nav-tabs {
+    display: none;
+    height: 48px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 9;
+  }
+
+  .mobile-nav-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mobile-nav-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: rgba(6, 182, 212, 0.04);
+  }
+
+  /* Main Area */
   .main {
     flex: 1;
     display: grid;
     grid-template-columns: 360px 1fr;
     grid-template-rows: 1fr;
-    height: calc(100vh - 61px);
+    height: calc(100vh - 60px);
   }
 
   .left-panel {
@@ -98,7 +150,7 @@
   }
 
   .panel-section {
-    padding: 20px 24px;
+    padding: 18px 20px;
     border-bottom: 1px solid var(--border);
   }
 
@@ -108,7 +160,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--muted);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,10 +182,13 @@
     font-size: 12px;
     padding: 10px 36px 10px 12px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .input-wrap input:focus { border-color: var(--accent); }
+  .input-wrap input:focus { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.15);
+  }
   .input-wrap input::placeholder { color: var(--muted); }
 
   .input-icon-btn {
@@ -169,22 +224,38 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     line-height: 1.5;
-    padding: 14px;
+    padding: 12px;
     outline: none;
     resize: none;
-    min-height: 160px;
-    transition: border-color 0.2s;
+    min-height: 140px;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .prompt-wrap textarea:focus { border-color: var(--accent); }
+  .prompt-wrap textarea:focus { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.15);
+  }
 
-  .examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  /* Responsive Horizontal Scroll for Chips */
+  .examples { 
+    display: flex; 
+    gap: 8px; 
+    margin-top: 12px; 
+    overflow-x: auto; 
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .examples::-webkit-scrollbar {
+    height: 4px;
+  }
+  
   .example-chip {
+    flex-shrink: 0;
     font-size: 11px;
     background: var(--surface2);
     border: 1px solid var(--border2);
     border-radius: 6px;
-    padding: 4px 10px;
+    padding: 6px 12px;
     cursor: pointer;
     color: var(--muted);
     transition: all 0.2s;
@@ -211,12 +282,13 @@
   .primary-btn:hover:not(:disabled) { background: var(--accent-hover); }
   .primary-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* UNIFORM TAB HEADERS */
+  /* Tab Headers */
   .left-tabs {
     display: flex;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
-    height: 52px; /* Fixed uniform height */
+    height: 52px;
+    flex-shrink: 0;
   }
   .left-tab-btn {
     flex: 1;
@@ -240,7 +312,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    height: 52px; /* Matches .left-tabs exactly */
+    height: 52px;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
     flex-shrink: 0;
@@ -258,13 +330,11 @@
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     line-height: 1.5;
-    padding: 14px;
+    padding: 12px;
     outline: none;
-    resize: vertical;
-    min-height: 300px;
-    white-space: pre;
-    overflow-wrap: normal;
-    overflow-x: auto;
+    resize: none;
+    flex: 1;
+    min-height: 250px;
   }
 
   .status-bar {
@@ -273,8 +343,10 @@
     gap: 8px;
     font-size: 12px;
     color: var(--muted);
-    padding: 16px 24px;
+    padding: 14px 20px;
     margin-top: auto;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
   }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
   .dot.active { background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
@@ -289,17 +361,46 @@
 
   .view-tab-btn {
     font-size: 12px;
-    font-weight: 500;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    color: var(--muted);
+    font-weight: 600;
+    color: var(--text);
     padding: 6px 12px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Viewport Simulator Controls (Desktop Only) */
+  .viewport-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 2px;
+    margin-left: 8px;
+  }
+
+  .viewport-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 6px;
+    border-radius: 6px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.15s;
   }
-  .view-tab-btn.active { color: var(--text); border-color: var(--border2); background: var(--surface2); }
-  .view-tab-btn:hover:not(.active) { color: var(--text); }
+
+  .viewport-btn:hover { color: var(--text); }
+  .viewport-btn.active {
+    background: var(--border2);
+    color: var(--accent);
+  }
 
   .action-btn {
     display: flex;
@@ -320,9 +421,47 @@
   .action-btn.publish:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
   .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .preview-area { flex: 1; position: relative; overflow: hidden; }
-  iframe#preview, .fullscreen-container iframe { width: 100%; height: 100%; border: none; background: #fff; }
-  .fullscreen-container iframe { width: 100vw; height: 100vh; display: block; }
+  /* Device Simulator Containers */
+  .preview-area { 
+    flex: 1; 
+    position: relative; 
+    overflow: hidden; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #18181c;
+    transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  iframe#preview { 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+    background: #fff; 
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.3s;
+  }
+
+  /* Viewport Simulator Rules */
+  .viewport-desktop iframe#preview {
+    width: 100%;
+    height: 100%;
+  }
+
+  .viewport-tablet iframe#preview {
+    width: 768px;
+    height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    border: 8px solid #27272a;
+  }
+
+  .viewport-mobile iframe#preview {
+    width: 375px;
+    height: 85%;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    border: 10px solid #27272a;
+  }
 
   .empty-state {
     position: absolute;
@@ -333,6 +472,8 @@
     justify-content: center;
     gap: 16px;
     pointer-events: none;
+    z-index: 5;
+    background: var(--bg);
   }
   .empty-icon {
     width: 48px;
@@ -348,7 +489,7 @@
   .empty-title { font-size: 16px; font-weight: 500; color: var(--text); }
   .empty-sub { font-size: 13px; color: var(--muted); }
 
-  /* FULLSCREEN BRANDING BADGE */
+  /* Fullscreen Badge */
   .branding-badge {
     position: fixed;
     bottom: 20px;
@@ -411,29 +552,93 @@
   }
   .close-modal:hover { background: var(--surface2); }
 
-  /* Misc UI */
+  /* Loader */
   .spinner {
     width: 16px; height: 16px; border: 2px solid rgba(0,0,0,0.2);
     border-top-color: #000; border-radius: 50%; animation: spin 0.6s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Toast Messages */
   .toast {
     position: fixed; bottom: 24px; right: 24px; background: var(--surface);
     border: 1px solid var(--border2); border-radius: var(--radius); padding: 12px 16px;
     font-size: 13px; font-weight: 500; color: var(--text); z-index: 200;
     transform: translateY(50px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.success { border-color: var(--green); color: var(--green); }
   .toast.error { border-color: var(--red); color: var(--red); }
+
+  /* RESPONSIVE LAYOUT BREAKPOINTS */
+  @media (max-width: 768px) {
+    header.main-header {
+      padding: 10px 16px;
+    }
+
+    .main {
+      grid-template-columns: 1fr;
+      height: calc(100vh - 108px); /* Account for header + mobile navigation tabs */
+    }
+
+    .mobile-nav-tabs {
+      display: flex;
+    }
+
+    /* Toggle Views using CSS classes on body element */
+    body.view-editor .right-panel {
+      display: none !important;
+    }
+    body.view-preview .left-panel {
+      display: none !important;
+    }
+
+    body.view-editor .left-panel {
+      display: flex !important;
+      width: 100% !important;
+    }
+    body.view-preview .right-panel {
+      display: flex !important;
+      width: 100% !important;
+    }
+
+    .viewport-controls {
+      display: none !important; /* Hide viewport selection simulator on mobile screens */
+    }
+
+    iframe#preview {
+      width: 100% !important;
+      height: 100% !important;
+      border: none !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .action-btn span.btn-text {
+      display: none; /* Icon-only mode on very narrow viewports */
+    }
+    .action-btn {
+      padding: 8px;
+    }
+    .preview-toolbar {
+      padding: 0 12px;
+    }
+    .branding-badge {
+      bottom: 12px;
+      right: 12px;
+      font-size: 11px;
+      padding: 6px 12px;
+    }
+  }
 
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 </style>
 </head>
-<body>
+<body class="view-editor">
 
 <header class="main-header main-ui">
   <div class="logo">
@@ -445,9 +650,28 @@
         <line x1="16" y1="3" x2="14" y2="21"></line>
       </svg>
     </div>
-    Hash Page
+    <span>Hash Page</span>
+    <span class="logo-tagline">Instant AI Websites</span>
+  </div>
+  <div class="header-right">
+    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="header-link">
+      <span>Get API Key</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+    </a>
   </div>
 </header>
+
+<!-- Mobile Navigation Segmented Tabs -->
+<div class="mobile-nav-tabs main-ui">
+  <button class="mobile-nav-btn active" id="btn-view-editor" onclick="switchMobileView('editor')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+    Edit & Prompt
+  </button>
+  <button class="mobile-nav-btn" id="btn-view-preview" onclick="switchMobileView('preview')">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+    Live Preview
+  </button>
+</div>
 
 <div class="main main-ui">
   <div class="left-panel">
@@ -467,12 +691,12 @@
           </button>
         </div>
         <div class="input-wrap">
-          <input type="text" id="model-name" placeholder="Model (e.g. gemini-3-flash-preview)" value="gemini-3-flash-preview" />
+          <input type="text" id="model-name" placeholder="Model (e.g. gemini-2.5-flash-preview-09-2025)" value="gemini-2.5-flash-preview-09-2025" />
           <button class="input-icon-btn" title="Model name used for generation" style="cursor:default;">
              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </button>
         </div>
-        <div class="hint-text">No key? Get one at <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a></div>
+        <div class="hint-text">Leave blank to try workspace key, or get a key at <a href="https://aistudio.google.com/app/apikey" target="_blank">AI Studio</a></div>
       </div>
 
       <div class="panel-section" style="flex:1; display:flex; flex-direction:column; border-bottom:none;">
@@ -499,11 +723,11 @@
     <div class="tab-content" id="tab-input">
       <div class="panel-section" style="flex:1; display: flex; flex-direction: column; border-bottom: none;">
         <div class="section-label">Raw HTML Editor</div>
-        <div class="html-input-wrap" style="flex:1; margin-bottom: 16px;">
-          <textarea id="manual-html" placeholder="<!DOCTYPE html>&#10;<html>...</html>" style="height: 100%;"></textarea>
+        <div class="html-input-wrap" style="flex:1; margin-bottom: 16px; display: flex; flex-direction: column;">
+          <textarea id="manual-html" placeholder="<!DOCTYPE html>&#10;<html>&#10;<head>&#10;  <style>body { background: #000; color: #fff; }</style>&#10;</head>&#10;<body>&#10;  <h1>Hello World</h1>&#10;</body>&#10;</html>"></textarea>
         </div>
         <button class="primary-btn" id="render-btn" onclick="renderManualHTML()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm10 6l5-6-5-6v4H6v4h6v4z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
           Render HTML
         </button>
       </div>
@@ -518,27 +742,40 @@
   <div class="right-panel">
     <div class="preview-toolbar">
       <div class="toolbar-left">
-        <div class="view-tab-btn active" style="cursor: default;">Preview</div>
+        <div class="view-tab-btn">Preview</div>
+        
+        <!-- Viewport Simulator Controls -->
+        <div class="viewport-controls">
+          <button class="viewport-btn active" id="vp-desktop" onclick="setViewport('desktop')" title="Simulate Desktop Viewport">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </button>
+          <button class="viewport-btn" id="vp-tablet" onclick="setViewport('tablet')" title="Simulate Tablet Viewport">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </button>
+          <button class="viewport-btn" id="vp-mobile" onclick="setViewport('mobile')" title="Simulate Mobile Viewport">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
+          </button>
+        </div>
       </div>
       <div class="toolbar-right">
         <button class="action-btn" id="download-btn" onclick="downloadHTML()" disabled>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Save
+          <span class="btn-text">Save</span>
         </button>
         <button class="action-btn publish" id="publish-btn" onclick="publishSite()" disabled>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
-          Create Hash Link
+          <span class="btn-text">Create Hash Link</span>
         </button>
       </div>
     </div>
 
-    <div class="preview-area">
+    <div class="preview-area viewport-desktop">
       <div class="empty-state" id="empty-state">
         <div class="empty-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
         </div>
         <div class="empty-title">Canvas is empty</div>
-        <div class="empty-sub">Enter a prompt to generate a page</div>
+        <div class="empty-sub">Enter a prompt or HTML code to build a page</div>
       </div>
       <iframe id="preview" style="display:none;"></iframe>
     </div>
@@ -549,7 +786,7 @@
     <iframe id="fullscreen-preview"></iframe>
     
     <!-- BRANDING BADGE -->
-    <a href="/" target="_blank" class="branding-badge">
+    <a href="" onclick="window.location.hash=''; window.location.reload(); return false;" class="branding-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <line x1="4" y1="9" x2="20" y2="9"></line>
         <line x1="4" y1="15" x2="20" y2="15"></line>
@@ -567,7 +804,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
       Hash Link Created
     </div>
-    <div class="modal-sub">Your site is compressed and entirely encoded within this URL. It requires no hosting!</div>
+    <div class="modal-sub">Your site is fully compressed and embedded inside this URL. Copy and share it!</div>
     <div class="url-copy-wrap">
       <div class="url-display" id="share-url-display">hashpage.in/#z=...</div>
       <button class="copy-btn" id="copy-url-btn" onclick="copyShareURL()">Copy</button>
@@ -579,35 +816,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // Strict API usage guideline: Empty string, runtime-injected key prioritized
+  const apiKey = "";
   let generatedHTML = '';
-
-  // --- COMPRESSION HELPERS ---
-  function b64ToUint8(b64) {
-    const binString = atob(b64.replace(/-/g, '+').replace(/_/g, '/'));
-    return Uint8Array.from(binString, (m) => m.codePointAt(0));
-  }
-  
-  function uint8ToB64(bytes) {
-    const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join("");
-    return btoa(binString).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-  }
-
-  async function compressText(text) {
-    const stream = new Blob([new TextEncoder().encode(text)]).stream();
-    const compressedStream = stream.pipeThrough(new CompressionStream('deflate-raw'));
-    const response = new Response(compressedStream);
-    const buffer = await response.arrayBuffer();
-    return uint8ToB64(new Uint8Array(buffer));
-  }
-
-  async function decompressText(b64) {
-    const stream = new Blob([b64ToUint8(b64)]).stream();
-    const decompressedStream = stream.pipeThrough(new DecompressionStream('deflate-raw'));
-    const response = new Response(decompressedStream);
-    const buffer = await response.arrayBuffer();
-    return new TextDecoder().decode(buffer);
-  }
-  // ---------------------------
 
   window.addEventListener('load', () => {
     const savedKey = localStorage.getItem('gemini_api_key');
@@ -617,7 +828,7 @@
 
     loadFromHash();
   });
-
+  
   async function loadFromHash() {
     const hash = window.location.hash;
     if (!hash) return;
@@ -625,12 +836,12 @@
     try {
       let html = '';
       
-      // Handle the new, highly compressed format (#z=)
+      // Handle the highly compressed deflate format (#z=)
       if (hash.startsWith('#z=')) {
         const encoded = hash.slice(3);
-        html = await decompressText(encoded);
+        html = await decompressHTML(encoded);
       } 
-      // Handle legacy, uncompressed format (#site=)
+      // Handle legacy Base64 format (#site=)
       else if (hash.startsWith('#site=')) {
         const encoded = hash.slice(6);
         html = decodeURIComponent(atob(encoded));
@@ -654,7 +865,7 @@
       
       setStatus('Loaded Hash Page', 'success');
     } catch(e) {
-      console.error("Failed to parse Hash Page:", e);
+      console.error("Failed to parse Hash Page link:", e);
       history.replaceState(null, '', window.location.pathname);
     }
   }
@@ -664,7 +875,11 @@
     input.type = input.type === 'password' ? 'text' : 'password';
   }
 
-  function setPrompt(text) { document.getElementById('prompt').value = text; }
+  function setPrompt(text) { 
+    document.getElementById('prompt').value = text; 
+    // Shift to prompt tab if they clicked an example
+    switchLeftTab('generate');
+  }
 
   function setStatus(text, state) {
     const dot = document.getElementById('status-dot');
@@ -679,70 +894,142 @@
     document.getElementById('tab-input').classList.toggle('active', tab === 'input');
   }
 
+  function switchMobileView(view) {
+    if (view === 'editor') {
+      document.body.classList.remove('view-preview');
+      document.body.classList.add('view-editor');
+      document.getElementById('btn-view-editor').classList.add('active');
+      document.getElementById('btn-view-preview').classList.remove('active');
+    } else {
+      document.body.classList.remove('view-editor');
+      document.body.classList.add('view-preview');
+      document.getElementById('btn-view-editor').classList.remove('active');
+      document.getElementById('btn-view-preview').classList.add('active');
+    }
+  }
+
+  function setViewport(device) {
+    const previewArea = document.querySelector('.preview-area');
+    const buttons = document.querySelectorAll('.viewport-btn');
+    
+    previewArea.classList.remove('viewport-desktop', 'viewport-tablet', 'viewport-mobile');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if (device === 'desktop') {
+      previewArea.classList.add('viewport-desktop');
+      document.getElementById('vp-desktop').classList.add('active');
+    } else if (device === 'tablet') {
+      previewArea.classList.add('viewport-tablet');
+      document.getElementById('vp-tablet').classList.add('active');
+    } else if (device === 'mobile') {
+      previewArea.classList.add('viewport-mobile');
+      document.getElementById('vp-mobile').classList.add('active');
+    }
+  }
+
+  // Implementation of standard Exponential Backoff as required by the Gemini API Guidelines
+  async function fetchWithRetry(url, options, maxRetries = 5) {
+    let delay = 1000;
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+          return response;
+        }
+        if (attempt === maxRetries - 1) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `HTTP ${response.status}`);
+        }
+      } catch (err) {
+        if (attempt === maxRetries - 1) {
+          throw err;
+        }
+      }
+      await new Promise(resolve => setTimeout(resolve, delay));
+      delay *= 2;
+    }
+  }
+
   async function generate() {
-    const apiKey = document.getElementById('api-key').value.trim();
-    const modelName = document.getElementById('model-name').value.trim() || 'gemini-3-flash-preview';
-    const prompt = document.getElementById('prompt').value.trim();
+    const enteredKey = document.getElementById('api-key').value.trim();
+    const runtimeKey = apiKey || ""; // Try workspace key if nothing provided
+    const activeKey = enteredKey || runtimeKey;
+    const modelName = document.getElementById('model-name').value.trim() || 'gemini-2.5-flash-preview-09-2025';
+    const promptText = document.getElementById('prompt').value.trim();
 
-    if (!apiKey) { showToast('Please enter your Gemini API key', 'error'); return; }
-    if (!prompt) { showToast('Please describe the page you want to build', 'error'); return; }
+    if (!activeKey) { 
+      showToast('Please enter a Gemini API key to proceed', 'error'); 
+      return; 
+    }
+    if (!promptText) { 
+      showToast('Please describe the page you want to build', 'error'); 
+      return; 
+    }
 
-    localStorage.setItem('gemini_api_key', apiKey);
+    if (enteredKey) {
+      localStorage.setItem('gemini_api_key', enteredKey);
+    }
     localStorage.setItem('gemini_model', modelName);
 
     const btn = document.getElementById('gen-btn');
     const originalText = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> Creating...';
-    setStatus(`Calling ${modelName}...`, 'active');
+    btn.innerHTML = '<div class="spinner"></div> Creating Page...';
+    setStatus(`Requesting ${modelName}...`, 'active');
 
-    const systemPrompt = `You are an expert web developer. Output ONLY a complete HTML5 document (inline CSS/JS).
+    const systemPrompt = `You are a world-class UI developer. Output ONLY a completely functional, beautiful, modern HTML5 document.
 Rules:
-- No markdown, no code fences, no explanations
-- Minimize whitespace: no blank lines, indent with 1 space
-- No comments in code
-- Skip optional HTML boilerplate (e.g. no <meta charset> unless needed)
-- Use shorthand CSS properties
-- Minify JS: short variable names, no unnecessary spaces
-- Still make it visually good with modern design, animations, responsive layout`;
+- Strictly output valid HTML including CSS (<style>) and JS (<script>)
+- Do NOT wrap response in markdown code blocks or code fences (no \`\`\`html or \`\`\`)
+- Ensure the output is responsive and adapted beautifully to desktop, tablet, and mobile displays
+- Minimal design, modern typography, grid/flexbox layouts, elegant accents
+- Ensure no explanations, no commentary, and no leading/trailing markdown text`;
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
+      const payload = {
+        contents: [{ parts: [{ text: `Create this website: ${promptText}` }] }],
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        generationConfig: { maxOutputTokens: 8192, temperature: 0.7 }
+      };
+
+      const response = await fetchWithRetry(
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${activeKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: `${systemPrompt}\n\nCreate this website: ${prompt}` }] }],
-            generationConfig: { maxOutputTokens: 8192, temperature: 0.7 }
-          })
+          body: JSON.stringify(payload)
         }
       );
 
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error?.message || `HTTP ${response.status}`);
-      }
-
       const data = await response.json();
       let html = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      
+      // Clean up markdown fences just in case they are returned
       html = html.replace(/^```html\n?/i, '').replace(/^```\n?/, '').replace(/\n?```$/, '').trim();
 
-      if (!html || !html.includes('<')) throw new Error('No valid HTML returned from model.');
+      if (!html || !html.includes('<')) {
+        throw new Error('Valid HTML structure was not returned by the AI.');
+      }
 
       generatedHTML = html;
+      document.getElementById('manual-html').value = html;
       renderPreview(html);
       document.getElementById('empty-state').style.display = 'none';
       document.getElementById('download-btn').disabled = false;
       document.getElementById('publish-btn').disabled = false;
 
-      setStatus('Generation complete', 'success');
+      // On mobile, automatically show the preview pane upon successful generation
+      if (window.innerWidth <= 768) {
+        switchMobileView('preview');
+      }
+
+      setStatus('Ready', 'success');
       showToast('Page generated successfully!', 'success');
       
       if(window.location.hash) history.replaceState(null, '', window.location.pathname);
 
     } catch(e) {
-      setStatus('Error', 'error');
+      setStatus('Error generating page', 'error');
       showToast(e.message, 'error');
     } finally {
       btn.disabled = false;
@@ -752,7 +1039,7 @@ Rules:
 
   function renderManualHTML() {
     const html = document.getElementById('manual-html').value.trim();
-    if (!html) { showToast('Please enter some HTML code', 'error'); return; }
+    if (!html) { showToast('Please write or generate some HTML first', 'error'); return; }
     
     generatedHTML = html;
     renderPreview(html);
@@ -760,8 +1047,12 @@ Rules:
     document.getElementById('download-btn').disabled = false;
     document.getElementById('publish-btn').disabled = false;
 
-    setStatus('Manual HTML rendered', 'success');
-    showToast('HTML Rendered!', 'success');
+    if (window.innerWidth <= 768) {
+      switchMobileView('preview');
+    }
+
+    setStatus('Rendered code changes', 'success');
+    showToast('HTML loaded into frame!', 'success');
   }
 
   function renderPreview(html) {
@@ -784,8 +1075,7 @@ Rules:
   async function publishSite() {
     if (!generatedHTML) return;
     try {
-      // Use the new compression stream method for ultra-short URLs
-      const compressed = await compressText(generatedHTML);
+      const compressed = await compressHTML(generatedHTML);
       const base = window.location.origin + window.location.pathname;
       const url = base + '#z=' + compressed;
 
@@ -797,17 +1087,13 @@ Rules:
       document.getElementById('copy-url-btn').className = 'copy-btn';
     } catch(e) {
       console.error(e);
-      showToast('Compression failed or page too large', 'error');
+      showToast('Compression failed or page content is too large.', 'error');
     }
   }
 
   function copyShareURL() {
     const url = document.getElementById('share-url-display').textContent;
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(url).then(showCopySuccess).catch(() => fallbackCopy(url));
-    } else {
-        fallbackCopy(url);
-    }
+    fallbackCopy(url);
   }
   
   function fallbackCopy(text) {
@@ -815,11 +1101,17 @@ Rules:
     textArea.value = text;
     textArea.style.position = "fixed";
     document.body.appendChild(textArea);
-    textArea.focus(); textArea.select();
+    textArea.focus(); 
+    textArea.select();
     try {
-        if(document.execCommand('copy')) showCopySuccess();
-        else showToast('Failed to copy', 'error');
-    } catch (e) { showToast('Failed to copy', 'error'); }
+        if (document.execCommand('copy')) {
+          showCopySuccess();
+        } else {
+          showToast('Failed to copy', 'error');
+        }
+    } catch (e) { 
+      showToast('Failed to copy', 'error'); 
+    }
     document.body.removeChild(textArea);
   }
 
@@ -843,7 +1135,6 @@ Rules:
   document.getElementById('prompt').addEventListener('keydown', e => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') generate();
   });
-
 </script>
 </body>
 </html>
