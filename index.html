@@ -691,7 +691,7 @@
           </button>
         </div>
         <div class="input-wrap">
-          <input type="text" id="model-name" placeholder="Model (e.g. gemini-2.5-flash-preview-09-2025)" value="gemini-2.5-flash-preview-09-2025" />
+          <input type="text" id="model-name" placeholder="Model (e.g. gemini-3.5-flash)" value="gemini-3.5-flash" />
           <button class="input-icon-btn" title="Model name used for generation" style="cursor:default;">
              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </button>
@@ -954,7 +954,7 @@
     const enteredKey = document.getElementById('api-key').value.trim();
     const runtimeKey = apiKey || ""; // Try workspace key if nothing provided
     const activeKey = enteredKey || runtimeKey;
-    const modelName = document.getElementById('model-name').value.trim() || 'gemini-2.5-flash-preview-09-2025';
+    const modelName = document.getElementById('model-name').value.trim() || 'gemini-3.5-flash';
     const promptText = document.getElementById('prompt').value.trim();
 
     if (!activeKey) { 
